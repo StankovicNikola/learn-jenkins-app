@@ -13,7 +13,7 @@ pipeline {
             }
         }
         
-        stage('With docker') {
+        stage('Build - with docker') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -22,10 +22,13 @@ pipeline {
             }
             steps {
                 sh ''' 
-                    echo "With docker"
-                    npm --version
                     ls -la
-                    touch container-yes.txt
+                    node --version
+                    npm --version
+                    echo "Building app with docker"
+                    npm ci
+                    npm run build
+                    ls -la
                 '''
             }
         }
